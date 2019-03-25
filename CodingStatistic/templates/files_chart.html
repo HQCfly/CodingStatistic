@@ -1,0 +1,178 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">代码统计可视化 <i class="fa fa-thumb-tack pull-right"></i></div>
+    <div class="panel-body">
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-md-4">
+                <div class="input-group">
+
+                        <span class="input-group-btn">
+
+                                </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-md-4 -->
+            <div class="col-md-3 pull-right">
+
+
+            </div>
+
+        </div><!-- /.row -->
+
+        <div id="echart" style="width: 1000px;height:600px;">
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('echart'));
+    var ret = {{ret | safe}}
+    var js_line = []
+    var js_note_line = []
+    var js_blank_line = []
+    var js_actual_line = []
+    var js_actual_rate = []
+    var js_note_rate = []
+    var js_blank_rate = []
+    var js_file_name = []
+
+    for (i in ret) {
+//            console.log(i)
+        js_line.push(ret[i]['line'])
+    }
+
+    for (i in ret) {
+        js_note_line.push(ret[i]['note_line'])
+    }
+    for (i in ret) {
+        js_blank_line.push(ret[i]['blank_line'])
+    }
+    for (i in ret) {
+        js_actual_line.push(ret[i]['actual_line'])
+    }
+    for (i in ret) {
+        js_actual_rate.push(ret[i]['actual_line_rate'])
+    }
+    for (i in ret) {
+        js_note_rate.push(ret[i]['note_line_rate'])
+    }
+    for (i in ret) {
+        js_blank_rate.push(ret[i]['blank_line_rate'])
+    }
+    for (i in ret) {
+        js_file_name.push(ret[i]['file_name'])
+    }
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'Coding统计'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+//                type: 'shadow',        // 默认为直线，可选为：'line' | 'shadow'
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+
+        },
+        legend: {
+            data: ['代码总数量', '总注释量', '代码空行数', '实际代码量', '实际代码比率', '总注释比率', '总空行率']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: js_file_name,
+            axisPointer: {
+                type: 'shadow'
+            }
+
+        },
+//            ['代码总数量','总注释量','代码空行数','实际代码量','实际代码比率','总注释比率','总空行率']
+        yAxis: [
+            {
+                type: 'value',
+                name: '代码量',
+                min: 0,
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            {
+                type: 'value',
+                name: '比率',
+                min: 0,
+                max: 1,
+                interval:0.1,
+                axisLabel: {
+                    formatter: '{value}%'
+                }
+            }
+
+        ],
+        series: [
+            {
+                name: '代码总数量',
+                type: 'bar',
+                data: js_line
+            },
+            {
+                name: '总注释量',
+                type: 'bar',
+                data: js_note_line
+            },
+            {
+                name: '代码空行数',
+                type: 'bar',
+                data: js_blank_line
+            },
+            {
+                name: '实际代码量',
+                type: 'bar',
+                data: js_actual_line
+            },
+            {
+                name: '实际代码比率',
+                type: 'bar',
+                data: js_actual_rate
+            },
+            {
+                name: '总注释比率',
+                type: 'bar',
+                data: js_note_rate
+            },
+            {
+                name: '总空行率',
+                type: 'bar',
+                data: js_blank_rate
+            }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>
+{% endblock %}
+
+{% block class_chartIncome %}
+active
+{% endblock %}
+
+
+

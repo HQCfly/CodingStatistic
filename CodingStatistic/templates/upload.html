@@ -1,0 +1,28 @@
+
+{% extends 'layout.html' %}
+{% block content %}
+<div class="well">
+    <form action="" enctype="multipart/form-data" method="post">
+        <h3>文件上传</h3>
+        <hr>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <input type="file" name="code">
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-ok"></span> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+

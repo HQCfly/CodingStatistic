@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/css/list.css">
+<link rel="stylesheet" href="/static/css/layui.css">
+<style>
+
+</style>
+<div class="weadmin-nav">
+
+    <!--<button class="layui-btn " style="float:right;background-color: #337ab7"><a-->
+            <!--style="line-height:1.6em;margin-top:3px;float:right;color:white;" href="{{ add_url }}">添加</a></button>-->
+</div>
+<div class="weadmin-body">
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+
+            <th>ID</th>
+            <th>用户名</th>
+            <th>昵称</th>
+            <th>查看代码提交记录</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for row in data_list %}
+
+        <tr>
+
+            <td>{{ row.id }}</td>
+            <td>{{ row.user }}</td>
+            <td>{{ row.nickname }}</td>
+            <td>
+                <a href="/detail/{{row.id}}">查看</a>
+            </td>
+
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+    <nav class="pull-right">
+        <ul class="pagination">
+            {{ page_html|safe }}
+        </ul>
+    </nav>
+
+
+</div>
+<script>
+
+//    $("#choice").click(function () {
+//
+//        if ($(this).prop("checked")) {
+//            $(".choice_item").prop("checked", true)
+//        } else {
+//            $(".choice_item").prop("checked", false)
+//        }
+//
+//    })
+
+</script>
+
+{% endblock %}

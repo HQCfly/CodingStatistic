@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/css/list.css">
+<link rel="stylesheet" href="/static/css/layui.css">
+<style>
+
+</style>
+<div class="weadmin-nav">
+
+    <button class="layui-btn " style="float:right;background-color: #337ab7"><a
+            style="line-height:1.6em;margin-top:3px;float:right;color:white;"href="#">{{user_name.nickname}}用户代码提交记录</a></button>
+</div>
+<div class="weadmin-body">
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>总行数</th>
+            <th>提交时间</th>
+            <th>总注释行数</th>
+            <th>总空行数</th>
+            <th>实际代码量</th>
+            <th>实际代码比率</th>
+            <th>总注释比率</th>
+            <th>总空行比率</th>
+            <th>文件名称</th>
+            <th>可视化查看</th>
+            <th>删除</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for row in record_list %}
+
+        <tr>
+            <td>{{ row.id }}</td>
+
+            <td>{{ row.line }}</td>
+            <td>{{ row.ctime }}</td>
+            <td>{{ row.note_line }}</td>
+            <td>{{ row.blank_line }}</td>
+            <td>{{ row.actual_line }}</td>
+            <td>{{ row.actual_line_rate }}</td>
+            <td>{{ row.note_line_rate }}</td>
+            <td>{{ row.blank_line_rate }}</td>
+            <td>{{ row.file_name }}</td>
+            <td>
+                <a href="/visual/{{row.id}}">数据可视化</a>
+            </td>
+            <td>
+                <a href="/detele/{{row.id}}">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+    <nav class="pull-right">
+        <ul class="pagination">
+            {{ page_html|safe }}
+        </ul>
+    </nav>
+
+
+</div>
+<script>
+
+
+</script>
+
+{% endblock %}
